@@ -15,7 +15,7 @@ namespace MediaLibrary
                 switch (pickedChoice)
                 {
                     case "1":
-                        new MovieService(pickedChoice);
+                        new MovieJsonService(pickedChoice);
                         break;
                     case "2":
                         new ShowService(pickedChoice);

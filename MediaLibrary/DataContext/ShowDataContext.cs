@@ -10,24 +10,27 @@ namespace MediaLibrary
     public class ShowDataContext
     {
         private static IServiceCollection serviceCollection = new ServiceCollection();
+
         private static ServiceProvider serviceProvider =
             serviceCollection.AddLogging(x => x.AddConsole()).BuildServiceProvider();
+
         private static ILogger<Program> logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<Program>();
-        private static string showFilePath = @"Files/shows.csv";
+        private const string ShowFilePath = @"Files/shows.csv";
 
         public List<Show> showList = new List<Show>();
-        public ShowDataContext()
+
+        public void ReadMedia()
         {
             try
             {
                 int count = 0;
-                
+
                 int mediaID;
                 string title;
                 int season;
                 int episode;
 
-                StreamReader streamReader = new(showFilePath);
+                StreamReader streamReader = new(ShowFilePath);
                 streamReader.ReadLine();
 
                 while (!streamReader.EndOfStream)
@@ -75,18 +78,18 @@ namespace MediaLibrary
                 logger.LogError(e.Message);
                 Thread.Sleep(500);
                 Console.WriteLine("File not found.");
-                if (!File.Exists(showFilePath))
+                if (!File.Exists(ShowFilePath))
                 {
                     Console.WriteLine("Creating new file.\nPress anything to continue.");
                     Console.ReadLine();
-                    StreamWriter streamWriter = new(showFilePath, true);
+                    StreamWriter streamWriter = new(ShowFilePath, true);
                     streamWriter.WriteLine("showID,title,season,episode,writers");
                     streamWriter.Close();
                 }
             }
         }
 
-        public void WriteNewShow(Show show)
+        public void WriteNewMedia(Show show)
         {
             try
             {
@@ -104,7 +107,7 @@ namespace MediaLibrary
                     show.title = $"\"{show.title}\"";
                 }
 
-                StreamWriter streamWriter = new(showFilePath, true);
+                StreamWriter streamWriter = new(ShowFilePath, true);
                 streamWriter.WriteLine(
                     $"{show.mediaID},{show.title},{show.season},{show.episode},{string.Join("|", show.writers)}");
                 streamWriter.Close();

@@ -11,15 +11,17 @@ namespace MediaLibrary
     public class MovieDataContext
     {
         private static IServiceCollection serviceCollection = new ServiceCollection();
+
         private static ServiceProvider serviceProvider =
             serviceCollection.AddLogging(x => x.AddConsole()).BuildServiceProvider();
+
         private static ILogger<Program> logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<Program>();
-        private static string movieFilePath = @"Files/movies.csv";
+        private const string MovieFilePath = @"Files/movies.csv";
 
         public List<Movie> movieList = new List<Movie>();
-        
 
-        public MovieDataContext()
+
+        public void ReadMedia()
         {
             try
             {
@@ -29,7 +31,7 @@ namespace MediaLibrary
                 string title;
                 List<string> genre;
 
-                StreamReader streamReader = new(movieFilePath);
+                StreamReader streamReader = new(MovieFilePath);
                 streamReader.ReadLine();
 
                 while (!streamReader.EndOfStream)
@@ -53,6 +55,7 @@ namespace MediaLibrary
                         count++;
                     }
                 }
+
                 streamReader.Close();
                 logger.LogInformation("Movies in file {movieCount}", count);
             }
@@ -61,29 +64,29 @@ namespace MediaLibrary
                 logger.LogError(e.Message);
                 Thread.Sleep(500);
                 Console.WriteLine("File not found.");
-                if (!File.Exists(movieFilePath))
+                if (!File.Exists(MovieFilePath))
                 {
                     Console.WriteLine("Creating new file.\nPress anything to continue.");
                     Console.ReadLine();
-                    StreamWriter streamWriter = new(movieFilePath, true);
+                    StreamWriter streamWriter = new(MovieFilePath, true);
                     streamWriter.WriteLine("movieID,title,genres");
                     streamWriter.Close();
                 }
             }
         }
 
-        public void WriteNewMovie(Movie movie)
+        public void WriteNewMedia(Movie movie)
         {
             try
             {
-                movie.mediaID = movieList[movieList.Count-1].mediaID + 1;
+                movie.mediaID = movieList[movieList.Count - 1].mediaID + 1;
                 if (movie.title.IndexOf(',') != -1)
                 {
                     movie.title = $"\"{movie.title}\"";
                 }
-                
 
-                StreamWriter streamWriter = new(movieFilePath, true);
+
+                StreamWriter streamWriter = new(MovieFilePath, true);
                 streamWriter.Flush();
                 streamWriter.WriteLine($"{movie.mediaID},{movie.title},{string.Join("|", movie.genre)}");
                 streamWriter.Close();
@@ -96,6 +99,5 @@ namespace MediaLibrary
                 Console.WriteLine("Error adding movie");
             }
         }
-        
     }
 }

@@ -1,13 +1,14 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 
 namespace MediaLibrary
 {
     public class MovieRepository : IRepository
     {
         private MovieDataContext _context = new MovieDataContext();
+
         public void Write()
         {
             int ID = 0;
@@ -50,38 +51,36 @@ namespace MediaLibrary
                             break;
                     }
                 }
-                _context.WriteNewMovie(new Movie(ID, title, genre));
+
+                _context.WriteNewMedia(new Movie(ID, title, genre));
             }
             else
             {
                 Console.WriteLine("Movie title already exists\n");
             }
         }
-        
+
         public void Read()
         {
+            _context.ReadMedia();
             List<string> list = new List<string>();
             foreach (Movie m in _context.movieList)
             {
                 list.Add(m.Display());
             }
+
             MediaReadService mediaReadService = new MediaReadService();
             mediaReadService.ListMedia(list);
         }
+
         private bool TestTitle(string newTitle)
         {
-            List<string> titleList = new List<string>();
+            List<string> titleList = _context.movieList.Select(title => title.title.Replace('"', ' ').Trim().ToLower())
+                .ToList();
 
-            foreach (Movie title in _context.movieList)
+            if (titleList != null || titleList.Contains(newTitle))
             {
-                titleList.Add(title.title.Replace('"', ' ').Trim().ToLower());
-            }
-            if (titleList != null)
-            {
-                if (titleList.Contains(newTitle))
-                {
-                    return false;
-                }
+                return false;
             }
 
             return true;

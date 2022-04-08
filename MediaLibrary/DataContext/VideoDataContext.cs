@@ -16,11 +16,11 @@ namespace MediaLibrary
             serviceCollection.AddLogging(x => x.AddConsole()).BuildServiceProvider();
 
         private static ILogger<Program> logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<Program>();
-        private static string videoFilePath = @"Files/videos.csv";
+        private const string VideoFilePath = @"Files/videos.csv";
 
         public List<Video> videoList = new List<Video>();
 
-        public VideoDataContext()
+        public void ReadMedia()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace MediaLibrary
                 string format;
                 int length;
 
-                StreamReader streamReader = new(videoFilePath);
+                StreamReader streamReader = new(VideoFilePath);
                 streamReader.ReadLine();
 
                 while (!streamReader.EndOfStream)
@@ -79,18 +79,18 @@ namespace MediaLibrary
                 logger.LogError(e.Message);
                 Thread.Sleep(500);
                 Console.WriteLine("File not found.");
-                if (!File.Exists(videoFilePath))
+                if (!File.Exists(VideoFilePath))
                 {
                     Console.WriteLine("Creating new file.\nPress anything to continue.");
                     Console.ReadLine();
-                    StreamWriter streamWriter = new(videoFilePath, true);
+                    StreamWriter streamWriter = new(VideoFilePath, true);
                     streamWriter.WriteLine("videoID,title,format,length,regions");
                     streamWriter.Close();
                 }
             }
         }
 
-        public void WriteNewVideo(Video video)
+        public void WriteNewMedia(Video video)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace MediaLibrary
                     video.title = $"\"{video.title}\"";
                 }
 
-                StreamWriter streamWriter = new(videoFilePath, true);
+                StreamWriter streamWriter = new(VideoFilePath, true);
                 streamWriter.WriteLine(
                     $"{video.mediaID},{video.title},{video.format},{video.length},{string.Join("|", video.regions)}");
                 streamWriter.Close();

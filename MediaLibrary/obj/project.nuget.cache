@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "zSlu4u2jChdESl2lHvngJpW/lUTZoqazo4QmynJy9m0fm/fDnvcbF801LZ6Lfq2WNw/UgsgoyQP9Gm0NZUGvFA==",
+  "dgSpecHash": "/DQIQdRO1jHnzHIMjV7dZUVrJcQnVDI91CjJwvJkb3UqN2kqVCAhc2ba24gV9Lfp84XBAmxjeC/FAnvWZIsrUg==",
   "success": true,
   "projectFilePath": "C:\\Users\\jo\\RiderProjects\\MediaLibrary\\MediaLibrary\\MediaLibrary.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\jo\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

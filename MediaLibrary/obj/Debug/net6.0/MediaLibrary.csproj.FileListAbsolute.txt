@@ -1,6 +1,5 @@
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\bin\Debug\net6.0\appsettings.json
-C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\bin\Debug\net6.0\Files\movies.json
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\bin\Debug\net6.0\MediaLibrary.exe
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\bin\Debug\net6.0\MediaLibrary.deps.json
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\bin\Debug\net6.0\MediaLibrary.runtimeconfig.json
@@ -20,3 +19,5 @@ C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\obj\Debug\net6.0\MediaLibrar
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\obj\Debug\net6.0\ref\MediaLibrary.dll
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\obj\Debug\net6.0\MediaLibrary.pdb
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\obj\Debug\net6.0\MediaLibrary.genruntimeconfig.cache
+C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\obj\Debug\net6.0\MediaLibrary.csproj.CopyComplete

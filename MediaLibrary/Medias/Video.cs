@@ -4,9 +4,9 @@ namespace MediaLibrary
 {
     public class Video : Media
     { 
-        internal string format { get; set; }
-        internal int length { get; set; }
-        internal List<int> regions { get; set; }
+        public string format { get; set; }
+        public int length { get; set; }
+        public List<int> regions { get; set; }
         
         
         public string Display()

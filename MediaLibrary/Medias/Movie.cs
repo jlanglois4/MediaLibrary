@@ -4,8 +4,8 @@ namespace MediaLibrary
 {
     public class Movie : Media
     {
-        internal List<string> genre { get; set; }
-        
+        public List<string> genre { get; set; }
+
         public string Display()
         {
             return $"ID: {mediaID}\n" +
@@ -19,6 +19,5 @@ namespace MediaLibrary
             this.title = title;
             this.genre = genre;
         }
-        
     }
 }

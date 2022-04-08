@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -7,8 +8,8 @@ namespace MediaLibrary
 {
     public class ShowRepository : IRepository
     {
-        private ShowDataContext context = new ShowDataContext();
-        
+        private ShowDataContext _context = new ShowDataContext();
+
         public void Write()
         {
             int ID = 0;
@@ -16,7 +17,7 @@ namespace MediaLibrary
             int season;
             int episode;
             List<string> writers = new List<string>();
-             
+
             Console.WriteLine("Enter show title");
             title = Console.ReadLine();
             if (TestTitle(title))
@@ -82,7 +83,8 @@ namespace MediaLibrary
                             break;
                     }
                 }
-                context.WriteNewShow(new Show(ID, title, season, episode, writers));
+
+                _context.WriteNewMedia(new Show(ID, title, season, episode, writers));
             }
             else
             {
@@ -92,29 +94,25 @@ namespace MediaLibrary
 
         public void Read()
         {
+            _context.ReadMedia();
             List<String> list = new();
-            foreach (Show m in context.showList)
+            foreach (Show m in _context.showList)
             {
                 list.Add(m.Display());
             }
+
             MediaReadService mediaReadService = new MediaReadService();
             mediaReadService.ListMedia(list);
         }
-        
+
         private bool TestTitle(string newTitle)
         {
-            List<string> titleList = new List<string>();
+            List<string> titleList = _context.showList.Select(title => title.title.Replace('"', ' ').Trim().ToLower())
+                .ToList();
 
-            foreach (Show title in context.showList)
+            if (titleList != null || titleList.Contains(newTitle))
             {
-                titleList.Add(title.title.Replace('"', ' ').Trim().ToLower());
-            }
-            if (titleList != null)
-            {
-                if (titleList.Contains(newTitle))
-                {
-                    return false;
-                }
+                return false;
             }
 
             return true;

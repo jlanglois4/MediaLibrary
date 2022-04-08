@@ -20,6 +20,7 @@ namespace MediaLibrary
                             Console.WriteLine(list[i]);
                             index += 1;
                         }
+
                         anotherTen = index + 10;
                         Console.WriteLine("Enter 1 to exit. Enter anything else to continue.");
                         var lineRead = Console.ReadLine();
@@ -40,6 +41,7 @@ namespace MediaLibrary
                         {
                             Console.WriteLine(list[i + index]);
                         }
+
                         index = list.Count;
                     }
                 }
