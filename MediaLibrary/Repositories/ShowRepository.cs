@@ -9,18 +9,11 @@ namespace MediaLibrary
     public class ShowRepository : IRepository
     {
         private ShowDataContext _context = new ShowDataContext();
-        private List<Show> showList = new List<Show>();
-
-        public ShowRepository()
+       
+        public List<Show> GetContext()
         {
-            foreach (var s in _context.showList)
-            {
-                showList.Add(s);
-            }
-        }
-        public List<Show> GetShowList()
-        {
-            return showList;
+            _context.ReadMedia();
+            return _context.showList;
         }
         public void Write()
         {

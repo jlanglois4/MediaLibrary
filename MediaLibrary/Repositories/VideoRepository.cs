@@ -9,20 +9,11 @@ namespace MediaLibrary
     public class VideoRepository : IRepository
     {
         private VideoDataContext _context = new VideoDataContext();
-
-        private List<Video> videoList = new List<Video>();
-
-        public VideoRepository()
-        {
-            foreach (var s in _context.videoList)
-            {
-                videoList.Add(s);
-            }
-        }
         
-        public List<Video> GetVideoList()
+        public List<Video> GetContext()
         {
-            return videoList;
+            _context.ReadMedia();
+            return _context.videoList;
         }
         public void Write()
         {

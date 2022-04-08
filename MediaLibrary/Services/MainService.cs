@@ -29,7 +29,8 @@ namespace MediaLibrary
                         new VideoService(pickedChoice);
                         break;
                     case "4":
-                        new SearchService();
+                        SearchService searchService = new SearchService();
+                        searchService.SearchMedia();
                         break;
                     default:
                         Console.WriteLine("Thank you for using the Media Library.");
