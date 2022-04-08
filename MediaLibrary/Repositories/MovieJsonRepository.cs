@@ -10,7 +10,7 @@ namespace MediaLibrary.Repositories
     {
         private MovieDataContext _context = new MovieDataContext();
         private const string MovieJsonFilePath = @"Files/movies.json";
-        private List<Movie> _readFromFileList = new List<Movie>();
+        private List<Movie> JsonMovieList = new List<Movie>();
 
         private static readonly JsonSerializerSettings _options
             = new() {NullValueHandling = NullValueHandling.Ignore};
@@ -25,7 +25,7 @@ namespace MediaLibrary.Repositories
                 var movies = JsonConvert.DeserializeObject<List<Movie>>(json);
                 foreach (var m in movies)
                 {
-                    _readFromFileList.Add(m);
+                    JsonMovieList?.Add(m);
                 }
             }
             else
@@ -34,13 +34,18 @@ namespace MediaLibrary.Repositories
             }
         }
 
-        public void ConvertToJson()
+        public List<Movie> GetJsonMovieList()
+        {
+            return JsonMovieList;
+        }
+
+        private void ConvertToJson()
         {
             Console.WriteLine("Converting movies to JSON."); // delete afterwards
             _context.ReadMedia();
             foreach (var m in _context.movieList)
             {
-                _readFromFileList.Add(m);
+                JsonMovieList.Add(m);
             }
 
             WriteJson();
@@ -48,13 +53,13 @@ namespace MediaLibrary.Repositories
 
         private void WriteJson()
         {
-            string json = JsonConvert.SerializeObject(_readFromFileList, Formatting.Indented, _options);
+            string json = JsonConvert.SerializeObject(JsonMovieList, Formatting.Indented, _options);
             File.WriteAllText(MovieJsonFilePath, json);
         }
 
         public void Write()
         {
-            List<int> ids = _readFromFileList.Select(m => m.mediaID).ToList();
+            List<int> ids = JsonMovieList.Select(m => m.mediaID).ToList();
             int ID = ids.Max() + 1;
             string title;
 
@@ -98,7 +103,7 @@ namespace MediaLibrary.Repositories
                 }
 
                 Movie movie = new Movie(ID, title, genre);
-                _readFromFileList.Add(movie);
+                JsonMovieList.Add(movie);
                 WriteJson();
             }
             else
@@ -109,11 +114,7 @@ namespace MediaLibrary.Repositories
 
         public void Read()
         {
-            List<string> list = new List<string>();
-            foreach (var m in _readFromFileList)
-            {
-                list.Add(m.Display());
-            }
+            List<string> list = JsonMovieList.Select(m => m.Display()).ToList();
 
             MediaReadService read = new MediaReadService();
             read.ListMedia(list);
@@ -121,7 +122,7 @@ namespace MediaLibrary.Repositories
 
         private bool TestTitle(string newTitle)
         {
-            List<string> titleList = _readFromFileList.Select(title => title.title.Replace('"', ' ').Trim().ToLower())
+            List<string> titleList = JsonMovieList.Select(title => title.title.Replace('"', ' ').Trim().ToLower())
                 .ToList();
             if (titleList == null || titleList.Contains(newTitle))
             {

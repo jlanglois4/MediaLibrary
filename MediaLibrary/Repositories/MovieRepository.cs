@@ -78,7 +78,7 @@ namespace MediaLibrary
             List<string> titleList = _context.movieList.Select(title => title.title.Replace('"', ' ').Trim().ToLower())
                 .ToList();
 
-            if (titleList != null || titleList.Contains(newTitle))
+            if (titleList == null || titleList.Contains(newTitle))
             {
                 return false;
             }

@@ -9,7 +9,19 @@ namespace MediaLibrary
     public class ShowRepository : IRepository
     {
         private ShowDataContext _context = new ShowDataContext();
+        private List<Show> showList = new List<Show>();
 
+        public ShowRepository()
+        {
+            foreach (var s in _context.showList)
+            {
+                showList.Add(s);
+            }
+        }
+        public List<Show> GetShowList()
+        {
+            return showList;
+        }
         public void Write()
         {
             int ID = 0;
@@ -110,7 +122,7 @@ namespace MediaLibrary
             List<string> titleList = _context.showList.Select(title => title.title.Replace('"', ' ').Trim().ToLower())
                 .ToList();
 
-            if (titleList != null || titleList.Contains(newTitle))
+            if (titleList == null || titleList.Contains(newTitle))
             {
                 return false;
             }

@@ -20,7 +20,10 @@ namespace MediaLibrary
 
         public List<Movie> movieList = new List<Movie>();
 
-
+        public MovieDataContext()
+        {
+            CreateNewFile();
+        }
         public void ReadMedia()
         {
             try
@@ -62,21 +65,12 @@ namespace MediaLibrary
             catch (Exception e)
             {
                 logger.LogError(e.Message);
-                Thread.Sleep(500);
-                Console.WriteLine("File not found.");
-                if (!File.Exists(MovieFilePath))
-                {
-                    Console.WriteLine("Creating new file.\nPress anything to continue.");
-                    Console.ReadLine();
-                    StreamWriter streamWriter = new(MovieFilePath, true);
-                    streamWriter.WriteLine("movieID,title,genres");
-                    streamWriter.Close();
-                }
             }
         }
 
         public void WriteNewMedia(Movie movie)
         {
+            CreateNewFile();
             try
             {
                 movie.mediaID = movieList[movieList.Count - 1].mediaID + 1;
@@ -97,6 +91,20 @@ namespace MediaLibrary
             {
                 logger.LogError(e.StackTrace);
                 Console.WriteLine("Error adding movie");
+            }
+        }
+
+        private void CreateNewFile()
+        {
+            if (!File.Exists(MovieFilePath))
+            {
+                Thread.Sleep(500);
+                Console.WriteLine("File not found.");
+                Console.WriteLine("Creating new file.\nPress anything to continue.");
+                Console.ReadLine();
+                StreamWriter streamWriter = new(MovieFilePath, true);
+                streamWriter.WriteLine("movieID,title,genres");
+                streamWriter.Close();
             }
         }
     }

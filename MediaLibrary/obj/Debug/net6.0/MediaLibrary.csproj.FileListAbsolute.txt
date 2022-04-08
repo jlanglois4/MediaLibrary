@@ -21,3 +21,4 @@ C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\obj\Debug\net6.0\MediaLibrar
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\obj\Debug\net6.0\MediaLibrary.genruntimeconfig.cache
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\obj\Debug\net6.0\MediaLibrary.csproj.CopyComplete
+C:\Users\jo\RiderProjects\MediaLibrary\MediaLibrary\bin\Debug\net6.0\Files\movies.json

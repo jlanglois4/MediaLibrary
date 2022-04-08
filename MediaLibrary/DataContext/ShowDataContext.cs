@@ -19,6 +19,10 @@ namespace MediaLibrary
 
         public List<Show> showList = new List<Show>();
 
+        public ShowDataContext()
+        {
+            CreateNewFile();
+        }
         public void ReadMedia()
         {
             try
@@ -76,16 +80,6 @@ namespace MediaLibrary
             catch (Exception e)
             {
                 logger.LogError(e.Message);
-                Thread.Sleep(500);
-                Console.WriteLine("File not found.");
-                if (!File.Exists(ShowFilePath))
-                {
-                    Console.WriteLine("Creating new file.\nPress anything to continue.");
-                    Console.ReadLine();
-                    StreamWriter streamWriter = new(ShowFilePath, true);
-                    streamWriter.WriteLine("showID,title,season,episode,writers");
-                    streamWriter.Close();
-                }
             }
         }
 
@@ -118,6 +112,20 @@ namespace MediaLibrary
             {
                 logger.LogError(e.Message);
                 Console.WriteLine("Error adding show");
+            }
+        }
+
+        private void CreateNewFile()
+        {
+            if (!File.Exists(ShowFilePath))
+            {
+                Thread.Sleep(500);
+                Console.WriteLine("File not found.");
+                Console.WriteLine("Creating new file.\nPress anything to continue.");
+                Console.ReadLine();
+                StreamWriter streamWriter = new(ShowFilePath, true);
+                streamWriter.WriteLine("showID,title,season,episode,writers");
+                streamWriter.Close();
             }
         }
     }

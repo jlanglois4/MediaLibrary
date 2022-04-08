@@ -10,6 +10,20 @@ namespace MediaLibrary
     {
         private VideoDataContext _context = new VideoDataContext();
 
+        private List<Video> videoList = new List<Video>();
+
+        public VideoRepository()
+        {
+            foreach (var s in _context.videoList)
+            {
+                videoList.Add(s);
+            }
+        }
+        
+        public List<Video> GetVideoList()
+        {
+            return videoList;
+        }
         public void Write()
         {
             int ID = 0;
@@ -88,7 +102,7 @@ namespace MediaLibrary
             }
             else
             {
-                Console.WriteLine("Movie title already exists\n");
+                Console.WriteLine("Video title already exists\n");
             }
         }
 
@@ -110,7 +124,7 @@ namespace MediaLibrary
             List<string> titleList = _context.videoList.Select(title => title.title.Replace('"', ' ').Trim().ToLower())
                 .ToList();
 
-            if (titleList != null || titleList.Contains(newTitle))
+            if (titleList == null || titleList.Contains(newTitle))
             {
                 return false;
             }

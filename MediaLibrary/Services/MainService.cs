@@ -10,7 +10,12 @@ namespace MediaLibrary
             do
             {
                 Console.WriteLine(
-                    "Welcome to the Media Library. Please pick a form of media.\n1. Movies.\n2. Shows.\n3. Videos.\nEnter anything else to exit the Media Library.");
+                    "Welcome to the Media Library. Please pick a form of media.\n" +
+                    "1. Movies.\n" +
+                    "2. Shows.\n" +
+                    "3. Videos.\n" +
+                    "4. Search.\n" +
+                    "Enter anything else to exit the Media Library.");
                 string pickedChoice = Console.ReadLine();
                 switch (pickedChoice)
                 {
@@ -22,6 +27,9 @@ namespace MediaLibrary
                         break;
                     case "3":
                         new VideoService(pickedChoice);
+                        break;
+                    case "4":
+                        new SearchService();
                         break;
                     default:
                         Console.WriteLine("Thank you for using the Media Library.");
